@@ -222,11 +222,14 @@ function draw() {
     // 清空画布
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    // 绘制网格
+    drawGrid();
+    
     // 绘制游戏板
     for (let y = 0; y < ROWS; y++) {
         for (let x = 0; x < COLS; x++) {
             if (gameBoard[y][x]) {
-                drawBlock(x, y, colorBoard[y][x]);  // 使用保存的颜色
+                drawBlock(x, y, colorBoard[y][x]);
             }
         }
     }
@@ -236,10 +239,32 @@ function draw() {
         for (let y = 0; y < currentPiece.length; y++) {
             for (let x = 0; x < currentPiece[y].length; x++) {
                 if (currentPiece[y][x]) {
-                    drawBlock(currentX + x, currentY + y, currentColor);  // 使用当前颜色
+                    drawBlock(currentX + x, currentY + y, currentColor);
                 }
             }
         }
+    }
+}
+
+// 绘制网格
+function drawGrid() {
+    ctx.strokeStyle = 'rgba(128, 128, 128, 0.2)';
+    ctx.lineWidth = 0.5;
+
+    // 绘制垂直线
+    for (let x = 0; x <= COLS; x++) {
+        ctx.beginPath();
+        ctx.moveTo(x * BLOCK_SIZE, 0);
+        ctx.lineTo(x * BLOCK_SIZE, canvas.height);
+        ctx.stroke();
+    }
+
+    // 绘制水平线
+    for (let y = 0; y <= ROWS; y++) {
+        ctx.beginPath();
+        ctx.moveTo(0, y * BLOCK_SIZE);
+        ctx.lineTo(canvas.width, y * BLOCK_SIZE);
+        ctx.stroke();
     }
 }
 
